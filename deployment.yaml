@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: final-uni
+  labels:
+    app: final-uni
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: final-uni
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: final-uni
+        name: final-uni
+    spec:
+      containers:
+        - name: final-uni
+          image: "******"
+          env:
+            - name: OPENWEATHERMAP_API_KEY
+              value: "*****"
+            - name: AUTH_GOOGLE_ID
+              value: "*****"
+            - name: AUTH_GOOGLE_SECRET
+              value: "****"
+            - name: NEXTAUTH_URL
+              value: "*******"
+            - name: NEXTAUTH_SECRET
+              value: "********"
+            - name: DATABASE_URL
+              value: "*******"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+              name: http
+          resources:
+            limits:
+              cpu: 1000m
+              ephemeral-storage: 1G
+              memory: 2G
+            requests:
+              cpu: 1000m
+              ephemeral-storage: 1G
+              memory: 2G
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/cloud-container-g2
+                    operator: In
+                    values:
+                      - "true"
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - shahriar
+      tolerations: []
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  generation: 1
+  name: final-uni-free-ingress
+  namespace: novin-trade
+spec:
+  rules:
+    - host: final-uni-394cb0116a-novin-trade.apps.ir-tbz-sh1.arvancaas.ir
+      http:
+        paths:
+          - backend:
+              service:
+                name: final-uni
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: final-uni
+  name: final-uni
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+  selector:
+    app: final-uni
+  type: ClusterIP

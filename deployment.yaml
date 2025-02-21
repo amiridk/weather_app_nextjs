@@ -75,7 +75,7 @@ metadata:
   namespace: novin-trade
 spec:
   rules:
-    - host: final-uni-394cb0116a-novin-trade.apps.ir-tbz-sh1.arvancaas.ir
+    - host: ***********
       http:
         paths:
           - backend:

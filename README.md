@@ -8,7 +8,7 @@ OPENWEATHERMAP_API_KEY   ======> open weather api
 AUTH_GOOGLE_ID    ========> google cloud
 AUTH_GOOGLE_SECRET   ======> google cloud
 NEXTAUTH_URL =====> nextauth docs
-NEXTAUTH_SECRET =======> just something
+NEXTAUTH_SECRET =======> just something random
 DATABASE_URL =======>Mongo db url / for auth only
 
 you can see docker file and feel free to optimize that .
@@ -19,3 +19,4 @@ also this is docker image = amirwz/final-uni:1.2
 این یک پروژه هواشناسی با نکست جی اس و مونگو هستش 
 با اضافه کردن متغیر های محیطی که دادم براحتی میتونید بالا بیارید اپ یا از ایمیج داکر استفاده کنید
 با استفاده از فایل deployment میتونید با استفاده از اروان کلود و سرویس PaaS برای استقرار استفاده کنید.
+برای دریافت هر متغیر ارایه دهنده یا موزد مربوطه جلوی هز کدوم نوشته شده.
